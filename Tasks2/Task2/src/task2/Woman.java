@@ -1,5 +1,7 @@
 package task2;
 
+import java.util.Scanner;
+
 public class Woman extends HomoSapiens {
 
     @Override
@@ -16,12 +18,22 @@ public class Woman extends HomoSapiens {
     public HomoSapiens giveBirth(HomoSapiens man) {
 	secondName = man.getSecondName();
 	if (random.nextDouble() <= 0.5) {
-	    Man boy = new Man(Sex.Male, secondName, "Baby", 3.5, 50);
+	    Scanner sc = new Scanner(System.in);
+	    System.out.println("Congradulations!!! You have a boy! Type the baby`s name:");
+	    String firstName = sc.nextLine();
+	    double width = (man.getWidth()*0.1+(man.getWidth()-this.getWidth()))*0.1  ;
+	    double height = ((man.getHeight()*0.1)+(this.getHeight()*0.1)+0.2);
+	    Man boy = new Man(Sex.Male, secondName, firstName, width, height);
 	    System.out.println(boy.toString() + " is born");
 
 	    return boy;
 	} else {
-	    Woman girl = new Woman(Sex.Female, secondName, "Baby", 3.5, 50);
+	    Scanner sc = new Scanner(System.in);
+	    System.out.println("Congradulations!!! You have a girl! Type the baby`s name:");
+	    String firstName = sc.nextLine();
+	    double width = (this.getWidth()*0.1+(man.getWidth())-this.getWidth())*0.1;
+	    double height = ((this.getHeight()*0.1)+(man.getHeight()*0.1)+0.2);
+	    Woman girl = new Woman(Sex.Female, secondName, firstName, width, height);
 	    System.out.println(girl.toString() + " is born");
 	    return girl;
 	}
