@@ -1,8 +1,9 @@
 package task2;
 
 import java.util.Random;
+import java.util.Scanner;
 
-public class HomoSapiens {
+public abstract class  HomoSapiens {
 
     protected Sex sex;
     protected String secondName;
@@ -10,6 +11,9 @@ public class HomoSapiens {
     protected double width;
     protected double height;
     protected Random random = new Random();
+
+    protected HomoSapiens() {
+    };
 
     protected HomoSapiens(Sex sex, String secondName, String firstName,
 	    double width, double height) {
@@ -20,6 +24,33 @@ public class HomoSapiens {
 	this.height = height;
     }
 
+    public static HomoSapiens createHomoSapiens() {
+
+	HomoSapiens person;
+	
+	Scanner sc = new Scanner(System.in);
+	System.out.println("Type the person`s sex (Male or Female): ");	
+	String sex = sc.next();	    
+	System.out.println("Type the First name: ");
+	String firstName = sc.next();
+	System.out.println("Type the Second name: ");
+	String secondName = sc.next();
+	System.out.println("Type the Weight: ");
+	double width = Double.parseDouble((sc.next()));
+	System.out.println("Type the Height: ");
+	double height = Double.parseDouble((sc.next()));
+	
+	if (sex.equals("Male")) {
+	    person = new Man(secondName, firstName, width, height);
+	   } else if (sex.equals("Female")) {
+	       person = new Woman(secondName, firstName, width, height);
+	} else {
+	    throw new IllegalArgumentException("unknown");
+	}
+	
+	return person;
+    }
+
     public boolean talk(HomoSapiens man) {
 	if (man.getSex().equals(Sex.Male) && this.getSex().equals(Sex.Male)) {
 	    if (random.nextDouble() <= 0.5) {
@@ -27,10 +58,10 @@ public class HomoSapiens {
 		return true;
 	    } else
 		System.out.println("Ñannot find common ground...");
-		return false;
+	    return false;
 	} else
 	    System.out.println("Easy to talk...");
-	    return true;
+	return true;
     }
 
     public boolean patience(HomoSapiens man) {
@@ -40,7 +71,7 @@ public class HomoSapiens {
 		return true;
 	    } else
 		System.out.println("Ñannot stand each other...");
-		return false;
+	    return false;
 	}
 	if (man.getSex().equals(Sex.Male) && this.getSex().equals(Sex.Male)) {
 	    if (random.nextDouble() <= 0.056) {
@@ -48,7 +79,7 @@ public class HomoSapiens {
 		return true;
 	    } else
 		System.out.println("Ñannot stand each other...");
-		return false;
+	    return false;
 	}
 
 	if (man.getSex().equals(Sex.Female) && this.getSex().equals(Sex.Female)) {
@@ -57,7 +88,7 @@ public class HomoSapiens {
 		return true;
 	    } else
 		System.out.println("Ñannot stand each other...");
-		return false;
+	    return false;
 	}
 	System.out.println("Ñannot stand each other...");
 	return false;
@@ -72,44 +103,40 @@ public class HomoSapiens {
 		return true;
 	    } else
 		System.out.println("Had a falling out");
-		return false;
+	    return false;
 	} else if (random.nextDouble() <= 0.95) {
 	    System.out.println("Have a good time together");
 	    return true;
 	} else
 	    System.out.println("Had a falling out");
-	    return false;
+	return false;
 
     }
 
-    public HomoSapiens hasRelation(Woman woman) {
-	if (this.talk(woman) == true & this.patience(woman) == true
-		& this.spendTimeTogether(woman) == true) {
+    public HomoSapiens hasRelation(HomoSapiens partner) {
+
+	if (this.talk(partner) == true & this.patience(partner) == true
+		& this.spendTimeTogether(partner) == true) {
 	    System.out.println("Are compatible");
-	    if (this.getSex().equals(Sex.Female)) {
+	    if (this.getSex().equals(partner.getSex())) {
 		System.out.println("but its hardly...");
 		return null;
 	    }
-	    System.out.println("They have done it!");	    
-	    return woman.giveBirth(this);
-	}
-	else
-	    System.out.println("Nothing happens...");	
-	    return null;
-	
-    }
+	    if (this.getSex().equals(Sex.Female)) {
+		System.out.println("They have done it!");
+		return ((Woman) this).giveBirth(this);
+	    }
+	    if (partner.getSex().equals(Sex.Female)) {
+		System.out.println("They have done it!");
+		Woman woman = (Woman) partner;
+		woman.toString();
+		return woman.giveBirth(this);
+	    }
 
-    public HomoSapiens hasRelation(Man man) {
-	if (talk(man) == true & patience(man) == true
-		& spendTimeTogether(man) == true) {
-	    System.out.println("Are compatible");
-	    if (man.getSex().equals(this.getSex())) {
-		return null;	    }
-	    if (man.getSex().equals(Sex.Male))
-		return man.hasRelation((Woman) this);
-	}
-	System.out.println("Nothing doing");
+	} else
+	    System.out.println("Nothing happens...");
 	return null;
+
     }
 
     public Sex getSex() {
@@ -152,4 +179,14 @@ public class HomoSapiens {
 	this.height = height;
     }
 
+    @Override
+    public String toString() {
+	if (this.getSex().equals(Sex.Female))
+	    return "Woman, named " + secondName + " " + firstName
+		    + ", weighing " + width + " kilo and growth " + height;
+	else
+	    return "Man, named " + secondName + " " + firstName + ", weighing "
+		    + width + " kilo and growth " + height;
+
+    }
 }

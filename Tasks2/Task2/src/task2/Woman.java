@@ -10,9 +10,9 @@ public class Woman extends HomoSapiens {
 		+ width + " kilo and growth " + height;
     }
 
-    public Woman(Sex sex, String secondName, String firstName, double width,
+    public Woman(String secondName, String firstName, double width,
 	    double height) {
-	super(sex, secondName, firstName, width, height);
+	super(Sex.Female, secondName, firstName, width, height);
     }
 
     public HomoSapiens giveBirth(HomoSapiens man) {
@@ -23,7 +23,7 @@ public class Woman extends HomoSapiens {
 	    String firstName = sc.nextLine();
 	    double width = (man.getWidth()*0.1+(man.getWidth()-this.getWidth()))*0.1  ;
 	    double height = ((man.getHeight()*0.1)+(this.getHeight()*0.1)+0.2);
-	    Man boy = new Man(Sex.Male, secondName, firstName, width, height);
+	    HomoSapiens boy = new Man(secondName, firstName, width, height);
 	    System.out.println(boy.toString() + " is born");
 
 	    return boy;
@@ -33,7 +33,7 @@ public class Woman extends HomoSapiens {
 	    String firstName = sc.nextLine();
 	    double width = (this.getWidth()*0.1+(man.getWidth())-this.getWidth())*0.1;
 	    double height = ((this.getHeight()*0.1)+(man.getHeight()*0.1)+0.2);
-	    Woman girl = new Woman(Sex.Female, secondName, firstName, width, height);
+	    HomoSapiens girl = new Woman(secondName, firstName, width, height);
 	    System.out.println(girl.toString() + " is born");
 	    return girl;
 	}

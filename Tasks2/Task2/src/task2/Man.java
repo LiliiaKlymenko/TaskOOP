@@ -9,8 +9,8 @@ public class Man extends HomoSapiens{
 		+ height;
     }
 
-    public Man(Sex sex, String secondName, String firstName,  double width, double height) {
-	super(sex, secondName, firstName, width, height);	
+    public Man(String secondName, String firstName,  double width, double height) {
+	super(Sex.Male, secondName, firstName, width, height);	
     }
     
     
